@@ -1,3 +1,5 @@
+**Keep in mind you must put all the program files in the specified folder that is in the example**
+
 This is the command structure to use this program:
 
 Windows:
