@@ -18,7 +18,7 @@ Windows:
   
     Example:
     
-    cd "C:\Users\USER\Documents\\"
+    cd "C:\Users\USER\Documents\"
     
     "C:\Program Files\CUDARANDCompressor\CUDARANDCompressor-CPU.exe" 1 Example.txt
     
@@ -30,7 +30,7 @@ Windows:
   
     Example:
     
-    cd "C:\Users\USER\Documents\\"
+    cd "C:\Users\USER\Documents\"
     
     "C:\Program Files\CUDARANDCompressor\CUDARANDCompressor-CPU.exe" 2 Example.txt.CUDARAND
     
