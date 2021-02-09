@@ -1,0 +1,4 @@
+osslsigncode sign -certs ~/Documents/CUDARAND/Cert/certificate.crt -key ~/Documents/CUDARAND/Cert/private.key -n "CUDARAND-CPU-Windows" -i http://teo129.com/ -in CUDARANDCompressor-CPU.exe -out CUDARANDCompressor-CPU-Signed.exe
+osslsigncode sign -certs ~/Documents/CUDARAND/Cert/certificate.crt -key ~/Documents/CUDARAND/Cert/private.key -n "CUDARAND-CPU-Windows" -i http://teo129.com/ -in Compress-CPU.exe -out Compress-CPU-Signed.exe
+osslsigncode sign -certs ~/Documents/CUDARAND/Cert/certificate.crt -key ~/Documents/CUDARAND/Cert/private.key -n "CUDARAND-GPU-Windows" -i http://teo129.com/ -in CUDARANDCompressor-GPU.exe -out CUDARANDCompressor-GPU-Signed.exe
+osslsigncode sign -certs ~/Documents/CUDARAND/Cert/certificate.crt -key ~/Documents/CUDARAND/Cert/private.key -n "CUDARAND-GPU-Windows" -i http://teo129.com/ -in Compress-GPU.exe -out Compress-GPU-Signed.exe
