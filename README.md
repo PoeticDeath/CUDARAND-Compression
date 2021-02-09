@@ -1,4 +1,8 @@
-**Keep in mind you must put all the program files in the specified folder that is in the example**
+**Keep in mind you must put all the program files in the specified folder**
+
+For Windows: "C:\Program Files\CUDARAND\"
+
+For Linux: "/Programs/CUDARAND/"
 
 **This program is also currently command line only**
 
