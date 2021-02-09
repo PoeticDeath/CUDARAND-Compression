@@ -6,6 +6,8 @@ For Linux: "/Programs/CUDARANDCompressor/"
 
 **This program is also currently command line only**
 
+**Currently the program is pretty slow, however should be faster in the near future**
+
 This is the command structure to use this program:
 
   Windows Compress:
