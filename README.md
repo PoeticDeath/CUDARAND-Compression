@@ -6,7 +6,7 @@ For Linux: "/Programs/CUDARANDCompressor/"
 
 **This program is also currently command line only**
 
-**Currently the program is pretty slow, however should be faster in the near future**
+**Currently the program is pretty slow (Multiple hours to days depending on the file), however should be faster in the near future**
 
 This is the command structure to use this program:
 
