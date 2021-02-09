@@ -10,7 +10,7 @@ Windows:
   
     Example:
     
-    cd "C:\Users\Administrator\Documents\"
+    cd "C:\Users\USER\Documents\"
     
     "C:\Program Files\CUDARAND\CUDARANDCompressor-CPU.exe" 1 Example.txt
     
@@ -22,7 +22,7 @@ Windows:
   
     Example:
     
-    cd "C:\Users\Administrator\Documents\"
+    cd "C:\Users\USER\Documents\"
     
     "C:\Program Files\CUDARAND\CUDARANDCompressor-CPU.exe" 2 Example.txt.CUDARAND
     
@@ -37,7 +37,7 @@ Linux:
   
     Example:
     
-    cd "/home/akerr/Documents/"
+    cd "/home/USER/Documents/"
     
     /Programs/CUDARAND/CUDARANDCompressor-CPU 1 Example.txt
     
@@ -49,6 +49,6 @@ Linux:
   
     Example:
     
-    cd "/home/akerr/Documents/"
+    cd "/home/USER/Documents/"
     
     /Programs/CUDARAND/CUDARANDCompressor-CPU 2 Example.txt.CUDARAND
