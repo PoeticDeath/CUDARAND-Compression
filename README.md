@@ -17,7 +17,7 @@ Windows:
 Linux:
   Linux Compress:
   cd "/The Directory/Your File/Is in/"
-  /Programs/CUDARAND/CUDARANDCompressor-CPU 1 File.txt\n
+  /Programs/CUDARAND/CUDARANDCompressor-CPU 1 File.txt
     Example:
     cd "/home/akerr/Documents/"
     /Programs/CUDARAND/CUDARANDCompressor-CPU 1 Example.txt
