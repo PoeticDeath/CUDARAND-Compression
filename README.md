@@ -8,8 +8,6 @@ For Linux: "/Programs/CUDARANDCompressor/"
 
 This is the command structure to use this program:
 
-Windows:
-
   Windows Compress:
   
   cd "C:\The Directory\Your File\Is in\\"
@@ -34,9 +32,6 @@ Windows:
     
     "C:\Program Files\CUDARANDCompressor\CUDARANDCompressor-CPU.exe" 2 Example.txt.CUDARAND
     
-
-Linux:
-
   Linux Compress:
   
   cd "/The Directory/Your File/Is in/"
