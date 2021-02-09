@@ -12,25 +12,25 @@ Windows:
 
   Windows Compress:
   
-  cd "C:\The Directory\Your File\Is in\"
+  cd "C:\The Directory\Your File\Is in\\"
   
   "C:\Program Files\CUDARANDCompressor\CUDARANDCompressor-(CPU or GPU).exe" 1 File.txt
   
     Example:
     
-    cd "C:\Users\USER\Documents\"
+    cd "C:\Users\USER\Documents\\"
     
     "C:\Program Files\CUDARANDCompressor\CUDARANDCompressor-CPU.exe" 1 Example.txt
     
   Windows Decompress:
   
-  cd "C:\The Directory\Your File\Is in\"
+  cd "C:\The Directory\Your File\Is in\\"
   
   "C:\Program Files\CUDARANDCompressor\CUDARANDCompressor-(CPU or GPU).exe" 2 File.txt.CUDARAND
   
     Example:
     
-    cd "C:\Users\USER\Documents\"
+    cd "C:\Users\USER\Documents\\"
     
     "C:\Program Files\CUDARANDCompressor\CUDARANDCompressor-CPU.exe" 2 Example.txt.CUDARAND
     
