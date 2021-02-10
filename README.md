@@ -38,7 +38,7 @@ This is the command structure to use this program:
   
   cd "/The Directory/Your File/Is in/"
   
-  /Programs/CUDARANDCompressor/CUDARANDCompressor-CPU 1 File.txt
+  /Programs/CUDARANDCompressor/CUDARANDCompressor-(CPU or GPU) 1 File.txt
   
     Example:
     
@@ -50,7 +50,7 @@ This is the command structure to use this program:
   
   cd "/The Directory/Your File/Is in/"
   
-  /Programs/CUDARANDCompressor/CUDARANDCompressor-CPU 2 File.txt.CUDARAND
+  /Programs/CUDARANDCompressor/CUDARANDCompressor-(CPU or GPU) 2 File.txt.CUDARAND
   
     Example:
     
