@@ -2,12 +2,24 @@ from torch import manual_seed
 from torch import randint
 from sys import argv
 from sys import exit
-from threading import Thread
+from multiprocessing import Process as Thread
 from time import time
 from os import remove
-import subprocess
-from os import getpid
-import psutil
+def CompressMT(a1, a2, a3, a4, Threads):
+    w = -(int(int(Threads) * int(a2) + int(int(a1) - 1)))
+    strrec = ""
+    while (strrec != a3):
+        w += int(Threads) * int(a2)
+        manual_seed(w)
+        strrec = randint(9, (1, int(a4)), device="cuda:0")
+        strrec = strrec.tolist()
+        strrec = str(strrec)
+        strrec = strrec.replace("[[", "")
+        strrec = strrec.replace("]]", "")
+        strrec = strrec.replace(", ", "")
+    TempFile = open("TempFile", "w")
+    TempFile.write(str(w))
+    TempFile.close()
 def Decompress():
     from ast import literal_eval
     try:
@@ -20,14 +32,12 @@ def Decompress():
     z = Data[0]
     srtstrlen = Data[1]
     manual_seed(int(z))
-    value = randint(9, (1, int(srtstrlen)), device="cuda:0")
-    value = value.tolist()
-    value = str(value)
-    value = value.replace("[[", "")
-    value = value.replace("]]", "")
-    value = value.replace(", ", "")
-    value = int(value)
-    srtstr = str(value)
+    srtstr = randint(9, (1, int(srtstrlen)), device="cuda:0")
+    srtstr = srtstr.tolist()
+    srtstr = str(srtstr)
+    srtstr = srtstr.replace("[[", "")
+    srtstr = srtstr.replace("]]", "")
+    srtstr = srtstr.replace(", ", "")
     remove(Filename)
     Filename = Filename[:-9]
     OpenFile = open(Filename, "wb")
@@ -35,7 +45,6 @@ def Decompress():
     OpenFile.write(Data)
     OpenFile.close()
 def Compress():
-    global x, srtstr, srtstrlen, z
     try:
         Filename = argv[2]
     except IndexError:
@@ -59,7 +68,7 @@ def Compress():
     Tempfile.write(str(""))
     Tempfile.close()
     while (Threadsnm <= Threads):
-        subprocess.Popen(["C:\Program Files\CUDARANDCompressor\Compress-GPU.exe", f"{Threadsnm}", f"{n}", f"{srtstr}", f"{srtstrlen}"], stdout=subprocess.PIPE)
+        Thread(target=CompressMT, args=(Threadsnm, n, srtstr, srtstrlen, Threads,), daemon=True).start()
         print("Thread " + str(Threadsnm) + " started.")
         Threadsnm += 1
     TempFile = open("TempFile", "r")
@@ -71,10 +80,6 @@ def Compress():
     z = int(Data)
     OpenFile.close()
     remove(Filename)
-    pid = getpid()
-    parent = psutil.Process(pid)
-    for child in parent.children(recursive=True):
-        child.kill()
     remove("TempFile")
     Filename = Filename + ".CUDARAND"
     OpenFile = open(Filename, "w")
@@ -101,4 +106,5 @@ def Main():
         End = time() - Start
         print(str("Decompression took " + str(int(End)) + " seconds."))
         print("Decompressed")
-Main()
+if __name__ == '__main__':
+    Main()
