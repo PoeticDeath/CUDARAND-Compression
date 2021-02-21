@@ -5,10 +5,10 @@ def setup():
     File = open("Test.txt.CUDARAND", "w")
     File.write("[9999, 30000]")
     File.close()
-    subprocess.run(["C:\Program Files\CUDARANDCompressor\CUDARANDCompressor-GPU.exe", "2", "Test.txt.CUDARAND"])
+    subprocess.run(["python", "C:\Program Files\CUDARANDCompressor\CUDARANDCompressor-GPU.py", "2", "Test.txt.CUDARAND"])
 def run():
-    subprocess.run(["C:\Program Files\CUDARANDCompressor\CUDARANDCompressor-GPU.exe", "1", "Test.txt"])
-    subprocess.run(["C:\Program Files\CUDARANDCompressor\CUDARANDCompressor-GPU.exe", "2", "Test.txt.CUDARAND"])
+    subprocess.run(["python", "C:\Program Files\CUDARANDCompressor\CUDARANDCompressor-GPU.py", "1", "Test.txt"])
+    subprocess.run(["python", "C:\Program Files\CUDARANDCompressor\CUDARANDCompressor-GPU.py", "2", "Test.txt.CUDARAND"])
 os.mkdir(r"C:\Program Files\CUDARANDCompressor\Test")
 os.chdir(r"C:\Program Files\CUDARANDCompressor\Test")
 setup()
