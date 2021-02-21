@@ -28,7 +28,7 @@ def LargeCompress():
             if os.stat(filename).st_size == 10000:
                 List.append(name)
     for Part in List:
-        subprocess.run(["/Programs/CUDARANDCompressor/CUDARANDCompressor-CPU", f"1", f"Data/{Part}"])
+        subprocess.run(["python3", "/Programs/CUDARANDCompressor/CUDARANDCompressor-CPU.py", f"1", f"Data/{Part}"])
     End = time.time() - Start
     print("It took a total of " + str(End) + " seconds to Compress.")
 def LargeDecompress():
@@ -38,7 +38,7 @@ def LargeDecompress():
     List2 = os.listdir(str(Filedir + "/Data"))
     x = 1
     for Part in List:
-        subprocess.Popen(["/Programs/CUDARANDCompressor/CUDARANDCompressor-CPU", f"2", f"Data/{Part}"])
+        subprocess.Popen(["python3", "/Programs/CUDARANDCompressor/CUDARANDCompressor-CPU.py", f"2", f"Data/{Part}"])
         if (x % 10 == 0):
             time.sleep(10)
             print(str(x / len(List) * 100) + "% Complete", end="\r")
