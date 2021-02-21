@@ -12,7 +12,7 @@ def CompressMT(a1, a2, a3, a4, Threads):
     while (strrec != a3):
         w += int(Threads) * int(a2)
         manual_seed(w)
-        strrec = randint(9, (1, int(a4)), device="cuda:0")
+        strrec = randint(9, (1, int(a4)), device="cpu")
         strrec = strrec.tolist()
         strrec = str(strrec)
         strrec = strrec.replace("[[", "")
@@ -33,7 +33,7 @@ def Decompress():
     z = Data[0]
     srtstrlen = Data[1]
     manual_seed(int(z))
-    srtstr = randint(9, (1, int(srtstrlen)), device="cuda:0")
+    srtstr = randint(9, (1, int(srtstrlen)), device="cpu")
     srtstr = srtstr.tolist()
     srtstr = str(srtstr)
     srtstr = srtstr.replace("[[", "")
