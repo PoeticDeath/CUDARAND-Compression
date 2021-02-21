@@ -2,13 +2,11 @@ from torch import manual_seed
 from torch import randint
 from sys import argv
 from sys import exit
-from multiprocessing import Process as Thread
+from threading import Thread
 from time import time
 from os import remove
 from os import cpu_count
-def CompressMT(a1, a2, a3, a4, Threads):
-    w = -(int(int(Threads) * int(a2) + int(int(a1) - 1)))
-    strrec = ""
+def CompressMMT(strrec, w, a2, a3, a4, Threads):
     while (strrec != a3):
         w += int(Threads) * int(a2)
         manual_seed(w)
@@ -21,6 +19,10 @@ def CompressMT(a1, a2, a3, a4, Threads):
     TempFile = open("TempFile", "w")
     TempFile.write(str(w))
     TempFile.close()
+def CompressMT(a1, a2, a3, a4, Threads):
+    w = -(int(int(Threads) * int(a2) + int(int(a1) - 1)))
+    strrec = ""
+    CompressMMT(strrec, w, a2, a3, a4, Threads)
 def Decompress():
     from ast import literal_eval
     try:
