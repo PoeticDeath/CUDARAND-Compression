@@ -56,7 +56,7 @@ def Compress():
     del SRTSTR
     srtstr = LongTensor([srtstr])
     n = 1
-    Threads = cpu_count() * n
+    Threads = cpu_count() * n - 1
     try:
         x = int(argv[3]) - (Threads * n)
     except IndexError:
