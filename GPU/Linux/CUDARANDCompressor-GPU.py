@@ -1,5 +1,5 @@
-from torch import manual_seed
-from torch import randint
+from torch import manual_seed, randint, equal
+from torch.cuda import LongTensor
 from sys import argv
 from sys import exit
 from multiprocessing import Process as Thread
@@ -7,16 +7,17 @@ from time import time
 from os import remove
 def CompressMT(a1, a2, a3, a4, Threads):
     w = -(int(int(Threads) * int(a2) + int(int(a1) - 1)))
-    strrec = ""
-    while (strrec != a3):
+    SRTSTR = []
+    for intr in a3:
+        SRTSTR = SRTSTR + [int(intr)]
+    a3 = SRTSTR
+    del SRTSTR
+    a3 = LongTensor([a3])
+    strrec = LongTensor([0])
+    while equal(strrec, a3) is False:
         w += int(Threads) * int(a2)
         manual_seed(w)
         strrec = randint(9, (1, int(a4)), device="cuda:0")
-        strrec = strrec.tolist()
-        strrec = str(strrec)
-        strrec = strrec.replace("[[", "")
-        strrec = strrec.replace("]]", "")
-        strrec = strrec.replace(", ", "")
     TempFile = open("TempFile", "w")
     TempFile.write(str(w))
     TempFile.close()
