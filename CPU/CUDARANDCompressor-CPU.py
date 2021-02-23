@@ -4,7 +4,7 @@ from sys import exit
 from multiprocessing import Process as Thread
 from time import time
 from os import remove
-from os import cpu_count
+from psutil import cpu_count
 def CompressMT(a1, a2, a3, a4, Threads):
     w = -(int(int(Threads) * int(a2) + int(int(a1) - 1)))
     strrec = LongTensor([0])
@@ -56,7 +56,11 @@ def Compress():
     del SRTSTR
     srtstr = LongTensor([srtstr])
     n = 1
-    Threads = cpu_count() * n - 1
+    if (cpu_count() == cpu_count(logical=False)):
+        Threads = cpu_count() - 1
+    else:
+        Threads = cpu_count() - cpu_count() / cpu_count(logical=False)
+    Threads = Threads * n
     try:
         x = int(argv[3]) - (Threads * n)
     except IndexError:
