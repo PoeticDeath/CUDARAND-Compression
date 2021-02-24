@@ -31,7 +31,9 @@ def Decompress():
     Data = literal_eval(OpenFile.read())
     OpenFile.close()
     z = Data[0]
+    z = int(z, 16)
     srtstrlen = Data[1]
+    srtstrlen = int(srtstrlen, 16)
     manual_seed(int(z))
     srtstr = randint(9, (1, int(srtstrlen)), device="cuda:0")
     srtstr = srtstr.tolist()
@@ -83,8 +85,10 @@ def Compress():
     remove(Filename)
     remove("TempFile")
     Filename = Filename + ".CUDARAND"
+    z = hex(z)
+    srtstrlen = hex(srtstrlen)
     OpenFile = open(Filename, "w")
-    OpenFile.write(str("[" + str(z) + ", " + str(srtstrlen) + "]"))
+    OpenFile.write(str("[\"" + z + "\", \"" + srtstrlen + "\"]"))
     OpenFile.close()
 def Main():
     try:
