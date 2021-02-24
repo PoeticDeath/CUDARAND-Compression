@@ -28,7 +28,6 @@ def Decompress():
     z = int(z, 16)
     srtstrlen = Data[1]
     srtstrlen = int(srtstrlen, 16)
-    print(str(z) + " " + str(srtstrlen))
     manual_seed(int(z))
     srtstr = randint(9, (1, int(srtstrlen)), device="cpu")
     srtstr = srtstr.tolist()
