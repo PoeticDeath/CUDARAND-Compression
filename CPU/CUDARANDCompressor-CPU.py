@@ -2,19 +2,34 @@ from torch import manual_seed, randint, equal, LongTensor
 from sys import argv
 from sys import exit
 from multiprocessing import Process as Thread
+from multiprocessing import Manager
+manager = Manager()
 from time import time
 from os import remove
 from psutil import cpu_count
-def CompressMT(a1, a2, a3, a4, Threads):
-    w = -(int(int(Threads) * int(a2) + int(int(a1) - 1)))
-    strrec = LongTensor([0])
-    while equal(strrec, a3) is False:
-        w += int(Threads) * int(a2)
-        manual_seed(w)
-        strrec = randint(9, (1, int(a4)), device="cpu")
-    TempFile = open("TempFile", "w")
-    TempFile.write(str(w))
-    TempFile.close()
+def Processing(x, y, strrec):
+    try:
+        manual_seed(x)
+        strrec[1] = randint(9, (1, y), device="cpu")
+    except (BrokenPipeError, FileNotFoundError) as e:
+        exit()
+def CompressMT(a1, a2, a3, a4, Threads, Done, ANS):
+    try:
+        w = -(int(int(Threads) * int(a2) + int(int(a1) - 1)))
+        strrec = LongTensor([0])
+        while equal(strrec, a3) is False:
+            if (Done[1] != "0"):
+                exit()
+            w += int(Threads) * int(a2)
+            strrec = manager.dict()
+            t = Thread(target=Processing, args=(w, a4, strrec))
+            t.start()
+            t.join()
+            strrec = strrec[1]
+        ANS[1] = str(w)
+        Done[1] = "1"
+    except (ConnectionResetError, BrokenPipeError) as e:
+        exit()
 def Decompress():
     from ast import literal_eval
     try:
@@ -69,28 +84,24 @@ def Compress():
         x = -(Threads * n)
     z = x
     Threadsnm = 1
-    Tempfile = open("TempFile", "w")
-    Tempfile.write(str(""))
-    Tempfile.close()
+    Done = manager.dict()
+    ANS = manager.dict()
+    Done[1] = "0"
+    ANS[1] = ""
     while (Threadsnm <= Threads):
-        Thread(target=CompressMT, args=(Threadsnm, n, srtstr, srtstrlen, Threads,), daemon=True).start()
+        Thread(target=CompressMT, args=(Threadsnm, n, srtstr, srtstrlen, Threads, Done, ANS,)).start()
         print("Thread " + str(Threadsnm) + " started.")
         Threadsnm += 1
-    TempFile = open("TempFile", "r")
-    Data = TempFile.read()
-    while (Data == ""):
-        Data = TempFile.read()
+    while (ANS[1] == ""):
         pass
-    TempFile.close()
-    z = int(Data)
+    z = int(ANS[1])
     OpenFile.close()
     remove(Filename)
-    remove("TempFile")
     Filename = Filename + ".CUDARAND"
     z = hex(z)
     srtstrlen = hex(srtstrlen)
     OpenFile = open(Filename, "w")
-    OpenFile.write(str("[\"" + z + "\", \"" + srtstrlen + "\"]"))
+    OpenFile.write(str("[\"" + str(z)[2:] + "\", \"" + str(srtstrlen)[2:] + "\"]"))
     OpenFile.close()
 def Main():
     try:
