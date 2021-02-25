@@ -28,7 +28,7 @@ def CompressMT(a1, a2, a3, a4, Threads, Done, ANS):
             strrec = strrec[1]
         ANS[1] = str(w)
         Done[1] = "1"
-    except (ConnectionResetError, BrokenPipeError) as e:
+    except (ConnectionResetError, BrokenPipeError, KeyError) as e:
         exit()
 def Decompress():
     from ast import literal_eval
