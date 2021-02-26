@@ -11,6 +11,24 @@ def Processing(x, y, strrec):
     try:
         manual_seed(x)
         strrec[1] = randint(9, (1, y), device="cpu")
+        manual_seed(x - 1)
+        strrec[2] = randint(9, (1, y), device="cpu")
+        manual_seed(x - 2)
+        strrec[3] = randint(9, (1, y), device="cpu")
+        manual_seed(x - 3)
+        strrec[4] = randint(9, (1, y), device="cpu")
+        manual_seed(x - 4)
+        strrec[5] = randint(9, (1, y), device="cpu")
+        manual_seed(x - 5)
+        strrec[6] = randint(9, (1, y), device="cpu")
+        manual_seed(x - 6)
+        strrec[7] = randint(9, (1, y), device="cpu")
+        manual_seed(x - 7)
+        strrec[8] = randint(9, (1, y), device="cpu")
+        manual_seed(x - 8)
+        strrec[9] = randint(9, (1, y), device="cpu")
+        manual_seed(x - 9)
+        strrec[10] = randint(9, (1, y), device="cpu")
     except:
         exit()
 def CompressMT(a1, a2, a3, a4, Threads, Done, ANS, CUR):
@@ -20,13 +38,64 @@ def CompressMT(a1, a2, a3, a4, Threads, Done, ANS, CUR):
         while equal(strrec, a3) is False:
             if (Done[1] != "0"):
                 exit()
-            w += int(Threads) * int(a2)
+            w += int(Threads) * int(a2) * 10
             strrec = manager.dict()
             t = Thread(target=Processing, args=(w, a4, strrec))
             t.start()
             t.join()
+            b = 0
+            if (b == 0):
+                if equal(strrec[1], a3) is True:
+                    b = 1
+                    strrec = strrec[1]
+            if (b == 0):
+                if equal(strrec[2], a3) is True:
+                    b = 1
+                    w = w - 1
+                    strrec = strrec[2]
+            if (b == 0):
+                if equal(strrec[3], a3) is True:
+                    b = 1
+                    w = w - 2
+                    strrec = strrec[3]
+            if (b == 0):
+                if equal(strrec[4], a3) is True:
+                    b = 1
+                    w = w - 3
+                    strrec = strrec[4]
+            if (b == 0):
+                if equal(strrec[5], a3) is True:
+                    b = 1
+                    w = w - 4
+                    strrec = strrec[5]
+            if (b == 0):
+                if equal(strrec[6], a3) is True:
+                    b = 1
+                    w = w - 5
+                    strrec = strrec[6]
+            if (b == 0):
+                if equal(strrec[7], a3) is True:
+                    b = 1
+                    w = w - 6
+                    strrec = strrec[7]
+            if (b == 0):
+                if equal(strrec[8], a3) is True:
+                    b = 1
+                    w = w - 7
+                    strrec = strrec[8]
+            if (b == 0):
+                if equal(strrec[9], a3) is True:
+                    b = 1
+                    w = w - 8
+                    strrec = strrec[9]
+            if (b == 0):
+                if equal(strrec[10], a3) is True:
+                    b = 1
+                    w = w - 9
+                    strrec = strrec[10]
+            if (b == 0):
+                strrec = LongTensor([0])
             CUR[1] = w
-            strrec = strrec[1]
         ANS[1] = str(w)
         Done[1] = "1"
     except:
