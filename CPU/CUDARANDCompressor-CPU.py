@@ -29,16 +29,18 @@ def Processing(x, y, strrec):
         strrec[9] = randint(9, (1, y), device="cpu")
         manual_seed(x - 9)
         strrec[10] = randint(9, (1, y), device="cpu")
+        manual_seed(x - 10)
+        strrec[11] = randint(9, (1, y), device="cpu")
     except:
         exit()
 def CompressMT(a1, a2, a3, a4, Threads, Done, ANS, CUR):
     try:
-        w = -(int(int(Threads) * int(a2) + int(int(a1) - 1))) * 10
+        w = -(int(int(Threads) * int(a2) + int(int(a1) - 1))) * 11
         strrec = LongTensor([0])
         while equal(strrec, a3) is False:
             if (Done[1] != "0"):
                 exit()
-            w += int(Threads) * int(a2) * 10
+            w += int(Threads) * int(a2) * 11
             strrec = manager.dict()
             t = Thread(target=Processing, args=(w, a4, strrec))
             t.start()
@@ -47,6 +49,7 @@ def CompressMT(a1, a2, a3, a4, Threads, Done, ANS, CUR):
             if (b == 0):
                 if equal(strrec[1], a3) is True:
                     b = 1
+                    w = w - 0
                     strrec = strrec[1]
             if (b == 0):
                 if equal(strrec[2], a3) is True:
@@ -93,6 +96,11 @@ def CompressMT(a1, a2, a3, a4, Threads, Done, ANS, CUR):
                     b = 1
                     w = w - 9
                     strrec = strrec[10]
+            if (b == 0):
+                if equal(strrec[11], a3) is True:
+                    b = 1
+                    w = w - 10
+                    strrec = strrec[11]
             if (b == 0):
                 strrec = LongTensor([0])
             CUR[1] = w
