@@ -13,7 +13,7 @@ def Processing(x, y, strrec):
         strrec[1] = randint(9, (1, y), device="cpu")
     except (BrokenPipeError, FileNotFoundError, ConnectionResetError, EOFError) as e:
         exit()
-def CompressMT(a1, a2, a3, a4, Threads, Done, ANS):
+def CompressMT(a1, a2, a3, a4, Threads, Done, ANS, CUR):
     try:
         w = -(int(int(Threads) * int(a2) + int(int(a1) - 1)))
         strrec = LongTensor([0])
@@ -25,6 +25,7 @@ def CompressMT(a1, a2, a3, a4, Threads, Done, ANS):
             t = Thread(target=Processing, args=(w, a4, strrec))
             t.start()
             t.join()
+            CUR[1] = w
             strrec = strrec[1]
         ANS[1] = str(w)
         Done[1] = "1"
@@ -86,13 +87,16 @@ def Compress():
     Threadsnm = 1
     Done = manager.dict()
     ANS = manager.dict()
+    CUR = manager.dict()
     Done[1] = "0"
     ANS[1] = ""
+    CUR[1] = 0
     while (Threadsnm <= Threads):
-        Thread(target=CompressMT, args=(Threadsnm, n, srtstr, srtstrlen, Threads, Done, ANS,)).start()
+        Thread(target=CompressMT, args=(Threadsnm, n, srtstr, srtstrlen, Threads, Done, ANS, CUR,)).start()
         print("Thread " + str(Threadsnm) + " started.")
         Threadsnm += 1
     while (ANS[1] == ""):
+        print(CUR[1], end="\r")
         pass
     z = int(ANS[1])
     OpenFile.close()
