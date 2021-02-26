@@ -31,7 +31,7 @@ def CompressMT(a1, a2, a3, a4, Threads, Done, ANS, CUR):
             t.join()
             b = 0
             n = 0
-            while (n < 11):
+            while (n < v):
                 if (b == 0):
                     if equal(strrec[n + 1], a3) is True:
                         b = 1
