@@ -11,7 +11,7 @@ def Processing(x, y, strrec):
     try:
         manual_seed(x)
         strrec[1] = randint(9, (1, y), device="cpu")
-    except (BrokenPipeError, FileNotFoundError, ConnectionResetError, EOFError) as e:
+    except:
         exit()
 def CompressMT(a1, a2, a3, a4, Threads, Done, ANS, CUR):
     try:
@@ -29,7 +29,7 @@ def CompressMT(a1, a2, a3, a4, Threads, Done, ANS, CUR):
             strrec = strrec[1]
         ANS[1] = str(w)
         Done[1] = "1"
-    except (ConnectionResetError, BrokenPipeError, KeyError) as e:
+    except:
         exit()
 def Decompress():
     from ast import literal_eval
