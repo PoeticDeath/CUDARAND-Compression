@@ -33,7 +33,7 @@ def Processing(x, y, strrec):
         exit()
 def CompressMT(a1, a2, a3, a4, Threads, Done, ANS, CUR):
     try:
-        w = -(int(int(Threads) * int(a2) + int(int(a1) - 1)))
+        w = -(int(int(Threads) * int(a2) + int(int(a1) - 1))) * 10
         strrec = LongTensor([0])
         while equal(strrec, a3) is False:
             if (Done[1] != "0"):
