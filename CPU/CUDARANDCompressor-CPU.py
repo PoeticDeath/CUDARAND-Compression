@@ -7,10 +7,10 @@ manager = Manager()
 from time import time
 from os import remove
 from psutil import cpu_count
-def Processing(x, y, strrec):
+def Processing(x, y, strrec, v):
     try:
         n = 0
-        while (n < 11):
+        while (n < v):
             manual_seed(x - n)
             strrec[n + 1] = randint(9, (1, y), device="cpu")
             n += 1
@@ -18,14 +18,15 @@ def Processing(x, y, strrec):
         exit()
 def CompressMT(a1, a2, a3, a4, Threads, Done, ANS, CUR):
     try:
-        w = -(int(int(Threads) + int(int(a1) - 1) * 11))
+        v = 228
+        w = -(int(int(Threads) + int(int(a1) - 1) * v))
         strrec = LongTensor([0])
         while equal(strrec, a3) is False:
             if (Done[1] != "0"):
                 exit()
-            w += int(int(Threads) * 11)
+            w += int(int(Threads) * v)
             strrec = manager.dict()
-            t = Thread(target=Processing, args=(w, a4, strrec))
+            t = Thread(target=Processing, args=(w, a4, strrec, v,))
             t.start()
             t.join()
             b = 0
