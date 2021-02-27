@@ -3,7 +3,7 @@ import subprocess
 import os
 def setup():
     File = open("Test.txt.CUDARAND", "w")
-    File.write("[9999, 30000]")
+    File.write("[\"270f\", \"7530\"]")
     File.close()
     subprocess.run(["python", "C:\Program Files\CUDARANDCompressor\CUDARANDCompressor-GPU.py", "2", "Test.txt.CUDARAND"])
 def run():
