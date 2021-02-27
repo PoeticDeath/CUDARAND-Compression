@@ -3,24 +3,49 @@ from torch.cuda import LongTensor
 from sys import argv
 from sys import exit
 from multiprocessing import Process as Thread
+from multiprocessing import Manager
+manager = Manager()
 from time import time
 from os import remove
-def CompressMT(a1, a2, a3, a4, Threads):
-    w = -(int(int(Threads) * int(a2) + int(int(a1) - 1)))
-    SRTSTR = []
-    for intr in a3:
-        SRTSTR = SRTSTR + [int(intr)]
-    a3 = SRTSTR
-    del SRTSTR
-    a3 = LongTensor([a3])
-    strrec = LongTensor([0])
-    while equal(strrec, a3) is False:
-        w += int(Threads) * int(a2)
-        manual_seed(w)
-        strrec = randint(9, (1, int(a4)), device="cuda:0")
-    TempFile = open("TempFile", "w")
-    TempFile.write(str(w))
-    TempFile.close()
+from sys import platform
+def Processing(x, y, strrec, v):
+    try:
+        n = 0
+        while (n < v):
+            manual_seed(x - n)
+            strrec[n + 1] = randint(9, (1, y), device="cuda:0")
+            n += 1
+    except:
+        exit()
+def CompressMT(a1, a2, a3, a4, Threads, Done, ANS, CUR):
+    try:
+        v = 228
+        w = -(int(int(Threads) + int(int(a1) - 1) * v))
+        strrec = LongTensor([0])
+        while equal(strrec, a3) is False:
+            if (Done[1] != "0"):
+                exit()
+            w += int(int(Threads) * v)
+            strrec = manager.dict()
+            t = Thread(target=Processing, args=(w, a4, strrec, v,))
+            t.start()
+            t.join()
+            b = 0
+            n = 0
+            while (n < v):
+                if (b == 0):
+                    if equal(strrec[n + 1], a3) is True:
+                        b = 1
+                        w = w - n
+                        strrec = strrec[n + 1]
+                n += 1
+            if (b == 0):
+                strrec = LongTensor([0])
+            CUR[1] = w
+        ANS[1] = str(w)
+        Done[1] = "1"
+    except:
+        exit()
 def Decompress():
     from ast import literal_eval
     try:
@@ -57,38 +82,49 @@ def Compress():
     srtstr = int.from_bytes(Data, "big")
     srtstr = str(srtstr)
     srtstrlen = len(srtstr)
+    SRTSTR = []
+    for intr in srtstr:
+        SRTSTR = SRTSTR + [int(intr)]
+    srtstr = SRTSTR
+    del SRTSTR
+    srtstr = LongTensor([srtstr])
     n = 1
-    GPUThreads = open("C:\Program Files\CUDARANDCompressor\GPUCUDACores.txt", "r")
-    Threads = int(GPUThreads.read()) * n
-    GPUThreads.close()
+    if (platform() == "win32"):
+        GPUThreads = open("C:\Program Files\CUDARANDCompressor\GPUCUDACores.txt", "r")
+        Threads = int(GPUThreads.read()) * n
+        GPUThreads.close()
+    if (platform() == "linux"):
+        GPUThreads = open("/Programs/CUDARANDCompressor/GPUCUDACores.txt", "r")
+        Threads = int(GPUThreads.read()) * n
+        GPUThreads.close()
+    Threads = Threads * n
     try:
         x = int(argv[3]) - (Threads * n)
     except IndexError:
         x = -(Threads * n)
     z = x
     Threadsnm = 1
-    Tempfile = open("TempFile", "w")
-    Tempfile.write(str(""))
-    Tempfile.close()
+    Done = manager.dict()
+    ANS = manager.dict()
+    CUR = manager.dict()
+    Done[1] = "0"
+    ANS[1] = ""
+    CUR[1] = 0
     while (Threadsnm <= Threads):
-        Thread(target=CompressMT, args=(Threadsnm, n, srtstr, srtstrlen, Threads,), daemon=True).start()
+        Thread(target=CompressMT, args=(Threadsnm, n, srtstr, srtstrlen, Threads, Done, ANS, CUR,)).start()
         print("Thread " + str(Threadsnm) + " started.")
         Threadsnm += 1
-    TempFile = open("TempFile", "r")
-    Data = TempFile.read()
-    while (Data == ""):
-        Data = TempFile.read()
+    while (ANS[1] == ""):
+        print(CUR[1], end="\r")
         pass
-    TempFile.close()
-    z = int(Data)
+    z = int(ANS[1])
     OpenFile.close()
     remove(Filename)
-    remove("TempFile")
     Filename = Filename + ".CUDARAND"
     z = hex(z)
     srtstrlen = hex(srtstrlen)
     OpenFile = open(Filename, "w")
-    OpenFile.write(str("[\"" + z + "\", \"" + srtstrlen + "\"]"))
+    OpenFile.write(str("[\"" + str(z)[2:] + "\", \"" + str(srtstrlen)[2:] + "\"]"))
     OpenFile.close()
 def Main():
     try:
