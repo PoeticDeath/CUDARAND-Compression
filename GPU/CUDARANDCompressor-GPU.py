@@ -97,7 +97,6 @@ def Compress():
         GPUThreads = open("/Programs/CUDARANDCompressor/GPUCUDACores.txt", "r")
         Threads = int(GPUThreads.read()) * n
         GPUThreads.close()
-    Threads = Threads * n
     try:
         x = int(argv[3]) - (Threads * n)
     except IndexError:
