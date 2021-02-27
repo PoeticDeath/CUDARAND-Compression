@@ -89,11 +89,12 @@ def Compress():
     del SRTSTR
     srtstr = LongTensor([srtstr])
     n = 1
-    if (platform() == "win32"):
+    os = platform()
+    if (os == "win32"):
         GPUThreads = open("C:\Program Files\CUDARANDCompressor\GPUCUDACores.txt", "r")
         Threads = int(GPUThreads.read()) * n
         GPUThreads.close()
-    if (platform() == "linux"):
+    if (os == "linux"):
         GPUThreads = open("/Programs/CUDARANDCompressor/GPUCUDACores.txt", "r")
         Threads = int(GPUThreads.read()) * n
         GPUThreads.close()
