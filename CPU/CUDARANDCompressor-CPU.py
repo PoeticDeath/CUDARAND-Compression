@@ -1,4 +1,5 @@
-from torch import manual_seed, randint, equal, LongTensor
+from numpy.random import seed, randint
+from numba import njit
 from sys import argv
 from sys import exit
 from multiprocessing import Process as Thread
@@ -7,21 +8,25 @@ manager = Manager()
 from time import time
 from os import remove
 from psutil import cpu_count
+@njit(parallel=True)
+def nrandint(w, x, y, z):
+    seed(w)
+    v = randint(x, y, z*4)
+    return v[:z]
 def Processing(x, y, strrec, v):
     try:
         n = 0
         while (n < v):
-            manual_seed(x - n)
-            strrec[n + 1] = randint(9, (1, y), device="cpu")
+            strrec[n + 1] = nrandint(x-n, 0, 10, y)
             n += 1
     except:
         exit()
 def CompressMT(a1, a2, a3, a4, Threads, Done, ANS, CUR):
     try:
-        v = 1
+        v = 10
         w = -(int(int(Threads) + int(int(a1) - 1) * v))
-        strrec = LongTensor([0])
-        while equal(strrec, a3) is False:
+        strrec = [0]
+        while (strrec == a3) is False:
             if (Done[1] != "0"):
                 exit()
             w += int(int(Threads) * v)
@@ -33,13 +38,13 @@ def CompressMT(a1, a2, a3, a4, Threads, Done, ANS, CUR):
             n = 0
             while (n < v):
                 if (b == 0):
-                    if equal(strrec[n + 1], a3) is True:
+                    if (strrec[n + 1].tolist() == a3) is True:
                         b = 1
                         w = w - n
-                        strrec = strrec[n + 1]
+                        strrec = strrec[n + 1].tolist()
                 n += 1
             if (b == 0):
-                strrec = LongTensor([0])
+                strrec = [0]
             CUR[1] = w
         ANS[1] = str(w)
         Done[1] = "1"
@@ -58,12 +63,11 @@ def Decompress():
     z = int(z, 16)
     srtstrlen = Data[1]
     srtstrlen = int(srtstrlen, 16)
-    manual_seed(int(z))
-    srtstr = randint(9, (1, int(srtstrlen)), device="cpu")
+    srtstr = nrandint(int(z), 0, 10, int(srtstrlen))
     srtstr = srtstr.tolist()
     srtstr = str(srtstr)
-    srtstr = srtstr.replace("[[", "")
-    srtstr = srtstr.replace("]]", "")
+    srtstr = srtstr.replace("[", "")
+    srtstr = srtstr.replace("]", "")
     srtstr = srtstr.replace(", ", "")
     remove(Filename)
     Filename = Filename[:-9]
@@ -86,7 +90,6 @@ def Compress():
         SRTSTR = SRTSTR + [int(intr)]
     srtstr = SRTSTR
     del SRTSTR
-    srtstr = LongTensor([srtstr])
     n = 1
     if (cpu_count() == cpu_count(logical=False)):
         Threads = cpu_count() - 1
