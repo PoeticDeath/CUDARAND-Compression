@@ -23,7 +23,7 @@ def Processing(x, y, strrec, v):
         exit()
 def CompressMT(a1, a2, a3, a4, Threads, Done, ANS, CUR):
     try:
-        v = 10
+        v = 500
         w = -(int(int(Threads) + int(int(a1) - 1) * v))
         strrec = [0]
         while (strrec == a3) is False:
