@@ -20,12 +20,12 @@ def check_process_status(process_name):
 def LargeCompress():
     Filedir = os.getcwd()
     subprocess.run(["/usr/bin/mkdir", "Data"])
-    subprocess.run(["/usr/bin/split", "-b 10000", f"{Filename}", f"{Filedir}/Data/{Filename}."])
+    subprocess.run(["/usr/bin/split", "-b 415", f"{Filename}", f"{Filedir}/Data/{Filename}."])
     List = []
     for root, dirs, files in os.walk(str(Filedir + "/Data/")):
         for name in files:
             filename = os.path.join(root, name)
-            if os.stat(filename).st_size == 10000:
+            if os.stat(filename).st_size == 415:
                 List.append(name)
     for Part in List:
         subprocess.run(["python3", "/Programs/CUDARANDCompressor/CUDARANDCompressor-CPU.py", f"1", f"Data/{Part}"])
