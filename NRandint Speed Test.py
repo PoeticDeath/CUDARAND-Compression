@@ -10,28 +10,24 @@ def nrandint(w, x, y, z):
     return v[:z]
 s = 0
 n = 1000
+c = n // 10
+a = 10**9
+b = 10**10
 tstart = time()
 manual_seed(s)
-torchrun = rand(0, 9, (1, n))
+torchrun = rand(a, (b-1), (1, c))
 tend = time() - tstart
 print("torch finished.")
 nstart = time()
 seed(s)
-numpyrun = randint(0, 10, n)
+numpyrun = randint(a, b, c)
 nend = time() - nstart
 print("numpy finished.")
-nrandint(s, 0, 10, n)
+nrandint(s, a, b, c)
 jstart = time()
-njitrun = nrandint(s, 0, 10, n)
+njitrun = nrandint(s, a, b, c)
 jend = time() - jstart
 print("njit finished.")
-if (str(numpyrun.tolist()) == str(njitrun.tolist())):
-    print("They are equal.")
-    print(str("%.16f" % tend) + " seconds for a torch run.")
-    print(str("%.16f" % nend) + " seconds for a numpy run.")
-    print(str("%.16f" % jend) + " seconds for a njit run.")
-else:
-    print("They aren't equal.")
-    print(str("%.16f" % tend) + " seconds for a torch run.")
-    print(str("%.16f" % nend) + " seconds for a numpy run.")
-    print(str("%.16f" % jend) + " seconds for a njit run.")
+print(str("%.16f" % tend) + " seconds for a torch run.")
+print(str("%.16f" % nend) + " seconds for a numpy run.")
+print(str("%.16f" % jend) + " seconds for a njit run.")
