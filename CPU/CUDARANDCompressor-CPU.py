@@ -8,10 +8,10 @@ manager = Manager()
 from time import time
 from os import remove
 from psutil import cpu_count
-@njit(parallel=True)
+@njit
 def nrandint(w, x, y, z):
     seed(w)
-    v = randint(x, y, z*4)
+    v = randint(x, y, z)
     return v[:z]
 def Processing(x, y, strrec, v):
     try:
