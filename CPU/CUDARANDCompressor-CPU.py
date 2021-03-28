@@ -13,18 +13,9 @@ def nrandint(w, x, y, z):
     seed(w)
     v = randint(x, y, z)
     return v[:z]
-def Processing(x, y, strrec, v):
-    try:
-        n = 0
-        while (n < v):
-            strrec[n + 1] = nrandint(x-n, 10**9, 10**10, y//10)
-            strrec[n + 1] = [ str(x) for x in strrec[n + 1] ]
-            n += 1
-    except:
-        exit()
 def CompressMT(a1, a2, a3, a4, Threads, Done, ANS, CUR):
     try:
-        v = 500
+        v = 50001
         w = -(int(int(Threads) + int(int(a1) - 1) * v))
         strrec = [0]
         while (strrec == a3) is False:
@@ -32,9 +23,11 @@ def CompressMT(a1, a2, a3, a4, Threads, Done, ANS, CUR):
                 exit()
             w += int(int(Threads) * v)
             strrec = manager.dict()
-            t = Thread(target=Processing, args=(w, a4, strrec, v,))
-            t.start()
-            t.join()
+            n = 0
+            while (n < v):
+                strrec[n + 1] = nrandint(w-n, 10**9, 10**10, a4//10)
+                strrec[n + 1] = [ str(x) for x in strrec[n + 1] ]
+                n += 1
             b = 0
             n = 0
             while (n < v):
