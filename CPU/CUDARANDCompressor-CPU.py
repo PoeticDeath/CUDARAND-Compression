@@ -17,7 +17,8 @@ def Processing(x, y, strrec, v):
     try:
         n = 0
         while (n < v):
-            strrec[n + 1] = nrandint(x-n, 0, 10, y)
+            strrec[n + 1] = nrandint(x-n, 10**9, 10**10, y//10)
+            strrec[n + 1] = [ str(x) for x in strrec[n + 1] ]
             n += 1
     except:
         exit()
@@ -38,10 +39,10 @@ def CompressMT(a1, a2, a3, a4, Threads, Done, ANS, CUR):
             n = 0
             while (n < v):
                 if (b == 0):
-                    if (strrec[n + 1].tolist() == a3) is True:
+                    if (strrec[n + 1] == a3) is True:
                         b = 1
                         w = w - n
-                        strrec = strrec[n + 1].tolist()
+                        strrec = strrec[n + 1]
                 n += 1
             if (b == 0):
                 strrec = [0]
@@ -63,7 +64,7 @@ def Decompress():
     z = int(z, 16)
     srtstrlen = Data[1]
     srtstrlen = int(srtstrlen, 16)
-    srtstr = nrandint(int(z), 0, 10, int(srtstrlen))
+    srtstr = nrandint(int(z), 10**9, 10**10, int(srtstrlen)//10)
     srtstr = srtstr.tolist()
     srtstr = str(srtstr)
     srtstr = srtstr.replace("[", "")
@@ -85,11 +86,7 @@ def Compress():
     srtstr = int.from_bytes(Data, "big")
     srtstr = str(srtstr)
     srtstrlen = len(srtstr)
-    SRTSTR = []
-    for intr in srtstr:
-        SRTSTR = SRTSTR + [int(intr)]
-    srtstr = SRTSTR
-    del SRTSTR
+    srtstr = [srtstr[i:i+10]for i in range(0,len(srtstr),10)]
     n = 1
     if (cpu_count() == cpu_count(logical=False)):
         Threads = cpu_count() - 1
