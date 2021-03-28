@@ -3,10 +3,10 @@ from torch import manual_seed
 from torch import randint as rand
 from numba import njit
 from time import time
-@njit(parallel=True)
+@njit
 def nrandint(w, x, y, z):
     seed(w)
-    v = randint(x, y, z*4)
+    v = randint(x, y, z)
     return v[:z]
 s = 0
 n = 1000
