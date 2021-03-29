@@ -13,11 +13,15 @@ n = 1000
 c = n // 10
 a = 10**9
 b = 10**10
+manual_seed(s)
+rand(a, (b-1), (1, c))
 tstart = time()
 manual_seed(s)
 torchrun = rand(a, (b-1), (1, c))
 tend = time() - tstart
 print("torch finished.")
+seed(s)
+randint(a, b, c)
 nstart = time()
 seed(s)
 numpyrun = randint(a, b, c)
@@ -30,4 +34,11 @@ jend = time() - jstart
 print("njit finished.")
 print(str("%.16f" % tend) + " seconds for a torch run.")
 print(str("%.16f" % nend) + " seconds for a numpy run.")
-print(str("%.16f" % jend) + " seconds for a njit run.")
+print(str("%.16f" % jend) + " seconds for a njit  run.")
+#print(torchrun.tolist())
+#print(numpyrun.tolist())
+#print(njitrun.tolist())
+#if (numpyrun.tolist() == njitrun.tolist()):
+#    print("They are the same.")
+#else:
+#    print("They are different.")
