@@ -1,3 +1,5 @@
+# NRandint Speed Test
+
 from numpy.random import seed, randint
 from torch import manual_seed
 from torch import randint as rand
@@ -35,10 +37,19 @@ print("njit finished.")
 print(str("%.16f" % tend) + " seconds for a torch run.")
 print(str("%.16f" % nend) + " seconds for a numpy run.")
 print(str("%.16f" % jend) + " seconds for a njit  run.")
-#print(torchrun.tolist())
-#print(numpyrun.tolist())
-#print(njitrun.tolist())
-#if (numpyrun.tolist() == njitrun.tolist()):
-#    print("They are the same.")
-#else:
-#    print("They are different.")
+
+# Compare List Speed Test
+
+liststart = time()
+if njitrun.tolist() == numpyrun.tolist():
+    listend = time()
+    print(str("%.16f" % float(listend - liststart)), "seconds for comparing njit and numpy lists.")
+else:
+    listend = time()
+    print(str("%.16f" % float(listend - liststart)), "seconds for comparing njit and numpy lists.")
+
+# Measure Measurement Time Test
+
+st = time()
+en = time()
+print(str("%.16f" % float(en - st)), "seconds for measuring time.")
