@@ -53,3 +53,8 @@ else:
 st = time()
 en = time()
 print(str("%.16f" % float(en - st)), "seconds for measuring time.")
+
+# Measure Clock Speed
+
+from psutil import cpu_freq
+print(str("%.16f" % float(1 / (max(cpu_freq())*1000000))), "seconds per clock.")
