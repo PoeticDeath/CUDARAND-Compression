@@ -46,6 +46,9 @@ def LargeDecompress():
     while (str(List) != "[]"):
         List = fnmatch.filter(os.listdir(str(Filedir + "/Data")), "*.CUDARAND.HEXS")
         pass
+    while (str(List) != "[]"):
+        List = fnmatch.filter(os.listdir(str(Filedir + "/Data")), "*.CUDARAND")
+        pass
     while (len(List2) < len(List1)):
         List2 = os.listdir(str(Filedir + "/Data"))
         pass
