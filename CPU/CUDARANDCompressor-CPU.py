@@ -85,7 +85,11 @@ def Compress():
     srtstr = int.from_bytes(Data, "big")
     srtstr = str(srtstr)
     srtstrlen = len(srtstr)
-    srtstr = [srtstr[i:i+10]for i in range(0,len(srtstr),10)]
+    SRTSTR = []
+    for digit in srtstr:
+        SRTSTR += [digit]
+    srtstr = SRTSTR
+    del SRTSTR
     n = 1
     if (cpu_count() == cpu_count(logical=False)):
         Threads = cpu_count() - 1
