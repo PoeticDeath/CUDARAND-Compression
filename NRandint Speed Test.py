@@ -11,10 +11,9 @@ def nrandint(w, x, y, z):
     v = randint(x, y, z)
     return v[:z]
 s = 0
-n = 1000
-c = n // 10
-a = 10**9
-b = 10**10
+c = 10
+a = 0
+b = 10
 manual_seed(s)
 rand(a, (b-1), (1, c))
 tstart = time()
