@@ -39,7 +39,7 @@ def CompressMT(a1, a2, a3, a4, Threads, Done, ANS, CUR):
                 n += 1
             if (b == 0):
                 strrec = [0]
-            CUR[1] = w
+            CUR[1] += v-1
         ANS[1] = str(w)
         Done[1] = "1"
     except:
