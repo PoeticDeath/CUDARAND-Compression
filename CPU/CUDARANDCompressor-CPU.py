@@ -46,12 +46,17 @@ def CompressMT(a1, a2, a3, a4, Threads, Done, ANS, CUR):
         exit()
 def Decompress():
     from ast import literal_eval
+    from HEXSmash import main
     try:
         Filename = argv[2]
     except IndexError:
         Filename = input("What would you like the file to be called? : ")
+    main('1', Filename)
+    remove(Filename)
+    Filename = Filename[:-5]
     OpenFile = open(Filename, "r")
-    Data = literal_eval(OpenFile.read())
+    HEXSTR = str(str(str(OpenFile.read()).replace("(", "[")).replace(")", "]")).replace("c", ",")
+    Data = literal_eval(HEXSTR)
     OpenFile.close()
     z = Data[0]
     z = int(z, 16)
@@ -70,6 +75,7 @@ def Decompress():
     OpenFile.write(Data)
     OpenFile.close()
 def Compress():
+    from HEXSmash import main
     try:
         Filename = argv[2]
     except IndexError:
@@ -112,8 +118,10 @@ def Compress():
     z = hex(z)
     srtstrlen = hex(srtstrlen)
     OpenFile = open(Filename, "w")
-    OpenFile.write(str("[\"" + str(z)[2:] + "\", \"" + str(srtstrlen)[2:] + "\"]"))
+    OpenFile.write(str("(\"" + str(z)[2:] + "\"c \"" + str(srtstrlen)[2:] + "\")"))
     OpenFile.close()
+    main('0', Filename)
+    remove(Filename)
 def Main():
     try:
         FileAction = argv[1]
