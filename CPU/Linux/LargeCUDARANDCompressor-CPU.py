@@ -33,8 +33,8 @@ def LargeCompress():
     print("It took a total of " + str(End) + " seconds to Compress.")
 def LargeDecompress():
     Filedir = os.getcwd()
-    List = fnmatch.filter(os.listdir(str(Filedir + "/Data")), "*.CUDARAND")
-    List1 = fnmatch.filter(os.listdir(str(Filedir + "/Data")), "*.CUDARAND")
+    List = fnmatch.filter(os.listdir(str(Filedir + "/Data")), "*.CUDARAND.HEXS")
+    List1 = fnmatch.filter(os.listdir(str(Filedir + "/Data")), "*.CUDARAND.HEXS")
     List2 = os.listdir(str(Filedir + "/Data"))
     x = 1
     for Part in List:
@@ -44,7 +44,7 @@ def LargeDecompress():
             print(str(x / len(List) * 100) + "% Complete", end="\r")
         x += 1
     while (str(List) != "[]"):
-        List = fnmatch.filter(os.listdir(str(Filedir + "/Data")), "*.CUDARAND")
+        List = fnmatch.filter(os.listdir(str(Filedir + "/Data")), "*.CUDARAND.HEXS")
         pass
     while (len(List2) < len(List1)):
         List2 = os.listdir(str(Filedir + "/Data"))
