@@ -25,7 +25,7 @@ def CompressMT(a1, a2, a3, a4, Threads, Done, ANS, CUR):
             strrec = manager.dict()
             n = 0
             while (n < v):
-                strrec[n + 1] = nrandint(w-n, 10**9, 10**10, a4//10)
+                strrec[n + 1] = nrandint(w-n, 0, 10, a4)
                 strrec[n + 1] = [ str(x) for x in strrec[n + 1] ]
                 n += 1
             b = 0
@@ -55,14 +55,14 @@ def Decompress():
     remove(Filename)
     Filename = Filename[:-5]
     OpenFile = open(Filename, "r")
-    HEXSTR = str(str(str(OpenFile.read()).replace("(", "[")).replace(")", "]")).replace("c", ",")
+    HEXSTR = str(str(str(OpenFile.read()).replace("(", "[")).replace(")", "]")).replace("C", ",")
     Data = literal_eval(HEXSTR)
     OpenFile.close()
     z = Data[0]
     z = int(z, 16)
     srtstrlen = Data[1]
     srtstrlen = int(srtstrlen, 16)
-    srtstr = nrandint(int(z), 10**9, 10**10, int(srtstrlen)//10)
+    srtstr = nrandint(int(z), 0, 10, int(srtstrlen))
     srtstr = srtstr.tolist()
     srtstr = str(srtstr)
     srtstr = srtstr.replace("[", "")
@@ -118,7 +118,7 @@ def Compress():
     z = hex(z)
     srtstrlen = hex(srtstrlen)
     OpenFile = open(Filename, "w")
-    OpenFile.write(str("(\"" + str(z)[2:] + "\"c \"" + str(srtstrlen)[2:] + "\")"))
+    OpenFile.write(str("(\"" + str(z)[2:] + "\"C \"" + str(srtstrlen)[2:] + "\")"))
     OpenFile.close()
     main('0', Filename)
     remove(Filename)
