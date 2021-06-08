@@ -4,7 +4,6 @@ from sys import argv
 from sys import exit
 from multiprocessing import Process as Thread
 from multiprocessing import Manager
-manager = Manager()
 from time import time
 from os import remove
 from psutil import cpu_count
@@ -14,8 +13,9 @@ def nrandint(w, x, y, z):
     v = randint(x, y, z)
     return v[:z]
 def CompressMT(a1, a2, a3, a4, Threads, Done, ANS, CUR):
+    manager = Manager()
     try:
-        v = 50001
+        v = 11
         w = -(int(int(Threads) + int(int(a1) - 1) * v))
         strrec = [0]
         while (strrec == a3) is False:
@@ -59,9 +59,9 @@ def Decompress():
     Data = literal_eval(HEXSTR)
     OpenFile.close()
     z = Data[0]
-    z = int(z, 16)
+    z = int(str(z), 16)
     srtstrlen = Data[1]
-    srtstrlen = int(srtstrlen, 16)
+    srtstrlen = int(str(srtstrlen), 16)
     srtstr = nrandint(int(z), 0, 10, int(srtstrlen))
     srtstr = srtstr.tolist()
     srtstr = str(srtstr)
@@ -75,6 +75,7 @@ def Decompress():
     OpenFile.write(Data)
     OpenFile.close()
 def Compress():
+    manager = Manager()
     from HEXSmash import main
     try:
         Filename = argv[2]
