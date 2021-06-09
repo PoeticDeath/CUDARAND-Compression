@@ -25,8 +25,11 @@ def CompressMT(a1, a2, a3, a4, Threads, Done, ANS, CUR):
             strrec = manager.dict()
             n = 0
             while (n < v):
-                strrec[n + 1] = nrandint(w-n, 0, 10, a4)
-                strrec[n + 1] = [ str(x) for x in strrec[n + 1] ]
+                if str(nrandint(w-n, 0, 10, 1)[0]) == a3[0]:
+                    strrec[n + 1] = nrandint(w-n, 0, 10, a4)
+                    strrec[n + 1] = [ str(x) for x in strrec[n + 1] ]
+                else:
+                    strrec[n + 1] = [0]
                 n += 1
             b = 0
             n = 0
