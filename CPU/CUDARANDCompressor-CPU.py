@@ -25,8 +25,8 @@ def CompressMT(a1, a2, a3, a4, Threads, Done, ANS, CUR):
             strrec = manager.dict()
             n = 0
             while (n < v):
-                if str(nrandint(w-n, 0, 10, 1)[0]) == a3[0]:
-                    strrec[n + 1] = nrandint(w-n, 0, 10, a4)
+                if str(nrandint(w-n, 0, 256, 1)[0]) == a3[0]:
+                    strrec[n + 1] = nrandint(w-n, 0, 256, a4)
                     strrec[n + 1] = [ str(x) for x in strrec[n + 1] ]
                 else:
                     strrec[n + 1] = [0]
@@ -65,16 +65,14 @@ def Decompress():
     z = int(str(z), 16)
     srtstrlen = Data[1]
     srtstrlen = int(str(srtstrlen), 16)
-    srtstr = nrandint(int(z), 0, 10, int(srtstrlen))
+    srtstr = nrandint(int(z), 0, 256, int(srtstrlen))
     srtstr = srtstr.tolist()
-    srtstr = str(srtstr)
-    srtstr = srtstr.replace("[", "")
-    srtstr = srtstr.replace("]", "")
-    srtstr = srtstr.replace(", ", "")
+    Data = b''
+    for byte in srtstr:
+        Data += int(byte).to_bytes(1, "big")
     remove(Filename)
     Filename = Filename[:-9]
     OpenFile = open(Filename, "wb")
-    Data = int(srtstr).to_bytes((int(srtstr).bit_length() + 7) // 8, byteorder="big")
     OpenFile.write(Data)
     OpenFile.close()
 def Compress():
@@ -86,14 +84,11 @@ def Compress():
         Filename = input("What file would you like to compress? : ")
     OpenFile = open(Filename, "rb")
     Data = OpenFile.read()
-    srtstr = int.from_bytes(Data, "big")
-    srtstr = str(srtstr)
-    srtstrlen = len(srtstr)
-    SRTSTR = []
-    for digit in srtstr:
-        SRTSTR += [digit]
+    srtstr = Data
+    SRTSTR = [str(srtstr[i]) for i in range(0, len(srtstr))]
     srtstr = SRTSTR
     del SRTSTR
+    srtstrlen = len(srtstr)
     n = 1
     if (cpu_count() == cpu_count(logical=False)):
         Threads = cpu_count() - 1
