@@ -96,17 +96,16 @@ def Compress():
         Threads = cpu_count() - cpu_count() / cpu_count(logical=False)
     Threads = Threads * n
     try:
-        x = int(argv[3]) - (Threads * n)
+        x = int(int(argv[3]) - (Threads * n))
     except IndexError:
-        x = -(Threads * n)
-    z = x
+        x = int(-(Threads * n))
     Threadsnm = 1
     Done = manager.dict()
     ANS = manager.dict()
     CUR = manager.dict()
     Done[1] = "0"
     ANS[1] = ""
-    CUR[1] = 0
+    CUR[1] = x
     Start = time()
     while (Threadsnm <= Threads):
         Thread(target=CompressMT, args=(Threadsnm, n, srtstr, srtstrlen, Threads, Done, ANS, CUR,)).start()
