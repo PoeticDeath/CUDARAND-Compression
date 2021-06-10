@@ -107,12 +107,14 @@ def Compress():
     Done[1] = "0"
     ANS[1] = ""
     CUR[1] = 0
+    Start = time()
     while (Threadsnm <= Threads):
         Thread(target=CompressMT, args=(Threadsnm, n, srtstr, srtstrlen, Threads, Done, ANS, CUR,)).start()
         print("Thread " + str(Threadsnm) + " started.")
         Threadsnm += 1
     while (ANS[1] == ""):
-        print(CUR[1], end="\r")
+        CURTIME = time() - Start
+        print(f'{CUR[1]:,}' + ' Checked, ' + f'{int(CUR[1]//CURTIME):,}' + ' Checked per Second.', end="\r")
         pass
     z = int(ANS[1])
     OpenFile.close()
@@ -137,7 +139,7 @@ def Main():
         Start = time()
         Compress()
         End = time() - Start
-        print(str("Compression took " + str(int(End)) + " seconds."))
+        print(str("\n" + "Compression took " + str(int(End)) + " seconds."))
         print("Compressed")
     if (FileAction == str("2")):
         print("Decompressing")
