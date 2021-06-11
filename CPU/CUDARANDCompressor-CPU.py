@@ -25,9 +25,9 @@ def CompressMT(a1, a2, a3, Threads, ANS, CUR):
             strrec = manager.dict()
             n = 0
             while (n < v):
-                if str(nrandint(w-n, 0, 256, 1)[0]) == a2[0]:
+                if int(nrandint(w-n, 0, 256, 1)[0]) == a2[0]:
                     strrec[n + 1] = nrandint(w-n, 0, 256, a3)
-                    strrec[n + 1] = [ str(x) for x in strrec[n + 1] ]
+                    strrec[n + 1] = strrec[n + 1].tolist()
                 else:
                     strrec[n + 1] = [0]
                 n += 1
@@ -82,9 +82,8 @@ def Compress():
     except IndexError:
         Filename = input("What file would you like to compress? : ")
     OpenFile = open(Filename, "rb")
-    Data = OpenFile.read()
-    srtstr = Data
-    SRTSTR = [str(srtstr[i]) for i in range(0, len(srtstr))]
+    srtstr = OpenFile.read()
+    SRTSTR = [srtstr[i] for i in range(0, len(srtstr))]
     srtstr = SRTSTR
     del SRTSTR
     srtstrlen = len(srtstr)
