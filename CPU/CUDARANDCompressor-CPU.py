@@ -12,21 +12,21 @@ def nrandint(w, x, y, z):
     seed(w)
     v = randint(x, y, z)
     return v[:z]
-def CompressMT(a1, a2, a3, a4, Threads, Done, ANS, CUR):
+def CompressMT(a1, a2, a3, Threads, ANS, CUR):
     manager = Manager()
     try:
         v = 11
         w = -(int(int(Threads) + int(int(a1) - 1) * v))
         strrec = [0]
-        while (strrec == a3) is False:
-            if (Done[1] != "0"):
+        while (strrec == a2) is False:
+            if (ANS[1] != ""):
                 exit()
             w += int(int(Threads) * v)
             strrec = manager.dict()
             n = 0
             while (n < v):
-                if str(nrandint(w-n, 0, 256, 1)[0]) == a3[0]:
-                    strrec[n + 1] = nrandint(w-n, 0, 256, a4)
+                if str(nrandint(w-n, 0, 256, 1)[0]) == a2[0]:
+                    strrec[n + 1] = nrandint(w-n, 0, 256, a3)
                     strrec[n + 1] = [ str(x) for x in strrec[n + 1] ]
                 else:
                     strrec[n + 1] = [0]
@@ -35,7 +35,7 @@ def CompressMT(a1, a2, a3, a4, Threads, Done, ANS, CUR):
             n = 0
             while (n < v):
                 if (b == 0):
-                    if (strrec[n + 1] == a3) is True:
+                    if (strrec[n + 1] == a2) is True:
                         b = 1
                         w = w - n
                         strrec = strrec[n + 1]
@@ -44,7 +44,6 @@ def CompressMT(a1, a2, a3, a4, Threads, Done, ANS, CUR):
                 strrec = [0]
             CUR[1] += v-1
         ANS[1] = str(w)
-        Done[1] = "1"
     except:
         exit()
 def Decompress():
@@ -100,15 +99,13 @@ def Compress():
     except IndexError:
         x = int(-(Threads * n))
     Threadsnm = 1
-    Done = manager.dict()
     ANS = manager.dict()
     CUR = manager.dict()
-    Done[1] = "0"
     ANS[1] = ""
     CUR[1] = x
     Start = time()
     while (Threadsnm <= Threads):
-        Thread(target=CompressMT, args=(Threadsnm, n, srtstr, srtstrlen, Threads, Done, ANS, CUR,)).start()
+        Thread(target=CompressMT, args=(Threadsnm, srtstr, srtstrlen, Threads, ANS, CUR,)).start()
         print("Thread " + str(Threadsnm) + " started.")
         Threadsnm += 1
     while (ANS[1] == ""):
