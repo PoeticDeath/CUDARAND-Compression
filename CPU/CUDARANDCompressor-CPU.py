@@ -12,30 +12,29 @@ def nrandint(w, x, y, z):
     seed(w)
     v = randint(x, y, z)
     return v[:z]
-def CompressMT(a1, a2, a3, Threads, ANS, CUR):
-    manager = Manager()
+def CompressMT(a1, a2, a3, Threads, ANS, CUR, x):
     try:
-        v = 401
-        w = -(int(int(Threads) + int(int(a1) - 1) * v))
+        n = 0
+        v = 400
+        w = a1 - 1 + x
         strr = [0]
-        strrec = manager.dict()
+        strrec = [0]
         while strr != a2:
             if (ANS[1] != ""):
                 exit()
-            w += int(int(Threads) * v)
-            n = 0
-            while (n < v):
-                if int(nrandint(w-n, 0, 256, 1)[0]) == a2[0]:
-                    strrec[n + 1] = nrandint(w-n, 0, 256, a3)
-                    strrec[n + 1] = strrec[n + 1].tolist()
-                else:
-                    strrec[n + 1] = [0]
-                if strrec[n + 1] == a2:
-                    w = w - n
-                    strr = strrec[n + 1]
-                n += 1
-            CUR[1] += v-1
-        ANS[1] = str(w)
+            w += Threads
+            if int(nrandint(w, 0, 256, 1)[0]) == a2[0]:
+                strrec = nrandint(w, 0, 256, a3)
+                strrec = strrec.tolist()
+            else:
+                strrec = [0]
+            if strrec == a2:
+                strr = strrec
+            n += 1
+            if n % v == 0:
+                n = 0
+                CUR[1] += v
+        ANS[1] = int(w)
     except:
         exit()
 def Decompress():
@@ -84,22 +83,22 @@ def Compress():
         Threads = cpu_count() - cpu_count() / cpu_count(logical=False)
     Threads = Threads * n
     try:
-        x = int(int(argv[3]) - (Threads * n))
+        x = int(argv[3])
     except IndexError:
-        x = int(-(Threads * n))
+        x = 0
     Threadsnm = 1
     ANS = manager.dict()
     CUR = manager.dict()
     ANS[1] = ""
-    CUR[1] = x
+    CUR[1] = 0 + x
     Start = time()
     while (Threadsnm <= Threads):
-        Thread(target=CompressMT, args=(Threadsnm, srtstr, srtstrlen, Threads, ANS, CUR,)).start()
+        Thread(target=CompressMT, args=(Threadsnm, srtstr, srtstrlen, Threads, ANS, CUR, x)).start()
         print("Thread " + str(Threadsnm) + " started.")
         Threadsnm += 1
     while (ANS[1] == ""):
         CURTIME = time() - Start
-        print(f'{CUR[1]:,}' + ' Checked, ' + f'{int(int(CUR[1]-abs(x))//CURTIME):,}' + ' Checked per Second.', end="\r")
+        print(f'{CUR[1]:,}' + ' Checked, ' + f'{int(int(CUR[1]-x)//CURTIME):,}' + ' Checked per Second.', end="\r")
         pass
     z = int(ANS[1])
     OpenFile.close()
