@@ -15,14 +15,14 @@ def nrandint(w, x, y, z):
 def CompressMT(a1, a2, a3, Threads, ANS, CUR):
     manager = Manager()
     try:
-        v = 400
+        v = 401
         w = -(int(int(Threads) + int(int(a1) - 1) * v))
-        strrec = [0]
-        while (strrec == a2) is False:
+        strr = [0]
+        strrec = manager.dict()
+        while strr != a2:
             if (ANS[1] != ""):
                 exit()
             w += int(int(Threads) * v)
-            strrec = manager.dict()
             n = 0
             while (n < v):
                 if int(nrandint(w-n, 0, 256, 1)[0]) == a2[0]:
@@ -30,18 +30,10 @@ def CompressMT(a1, a2, a3, Threads, ANS, CUR):
                     strrec[n + 1] = strrec[n + 1].tolist()
                 else:
                     strrec[n + 1] = [0]
+                if strrec[n + 1] == a2:
+                    w = w - n
+                    strr = strrec[n + 1]
                 n += 1
-            b = 0
-            n = 0
-            while (n < v):
-                if (b == 0):
-                    if (strrec[n + 1] == a2) is True:
-                        b = 1
-                        w = w - n
-                        strrec = strrec[n + 1]
-                n += 1
-            if (b == 0):
-                strrec = [0]
             CUR[1] += v-1
         ANS[1] = str(w)
     except:
@@ -83,9 +75,7 @@ def Compress():
         Filename = input("What file would you like to compress? : ")
     OpenFile = open(Filename, "rb")
     srtstr = OpenFile.read()
-    SRTSTR = [srtstr[i] for i in range(0, len(srtstr))]
-    srtstr = SRTSTR
-    del SRTSTR
+    srtstr = [srtstr[i] for i in range(0, len(srtstr))]
     srtstrlen = len(srtstr)
     n = 1
     if (cpu_count() == cpu_count(logical=False)):
