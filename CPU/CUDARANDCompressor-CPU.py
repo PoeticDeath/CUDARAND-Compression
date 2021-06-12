@@ -15,7 +15,7 @@ def nrandint(w, x, y, z):
 def CompressMT(a1, a2, a3, Threads, ANS, CUR):
     manager = Manager()
     try:
-        v = 11
+        v = int(a3**0.50)
         w = -(int(int(Threads) + int(int(a1) - 1) * v))
         strrec = [0]
         while (strrec == a2) is False:
@@ -109,7 +109,7 @@ def Compress():
         Threadsnm += 1
     while (ANS[1] == ""):
         CURTIME = time() - Start
-        print(f'{CUR[1]:,}' + ' Checked, ' + f'{int(CUR[1]//CURTIME):,}' + ' Checked per Second.', end="\r")
+        print(f'{CUR[1]:,}' + ' Checked, ' + f'{int(int(CUR[1]-abs(x))//CURTIME):,}' + ' Checked per Second.', end="\r")
         pass
     z = int(ANS[1])
     OpenFile.close()
