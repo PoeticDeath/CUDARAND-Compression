@@ -110,6 +110,7 @@ def Compress():
         CURTIME = time() - Start
         print(f'{CUR[1]:,}' + ' Checked, ' + f'{int(int(CUR[1]-x)//CURTIME):,}' + ' Checked per Second.', end="\r")
         pass
+    print()
     z = int(ANS[1])
     OpenFile.close()
     remove(Filename)
