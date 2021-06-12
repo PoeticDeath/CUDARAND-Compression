@@ -15,7 +15,7 @@ def nrandint(w, x, y, z):
 def CompressMT(a1, a2, a3, Threads, ANS, CUR):
     manager = Manager()
     try:
-        v = int(a3**0.50)
+        v = 400
         w = -(int(int(Threads) + int(int(a1) - 1) * v))
         strrec = [0]
         while (strrec == a2) is False:
