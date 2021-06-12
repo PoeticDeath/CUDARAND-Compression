@@ -58,8 +58,18 @@ def Decompress():
     srtstr = nrandint(int(z), 0, 256, int(srtstrlen))
     srtstr = srtstr.tolist()
     Data = b''
+    TempData = b''
     for byte in srtstr:
-        Data += int(byte).to_bytes(1, "big")
+        TempData += int(byte).to_bytes(1, "big")
+        if len(TempData) % 100 == 0:
+            print(f'{len(TempData)+len(Data):,}', "of", f'{len(srtstr):,}' + ".", end = "\r")
+            if len(TempData) % 1000000 == 0:
+                Data += TempData
+                TempData = b''
+    if len(TempData) != 0:
+        Data += TempData
+        TempData = b''
+    print()
     remove(Filename)
     Filename = Filename[:-9]
     OpenFile = open(Filename, "wb")
