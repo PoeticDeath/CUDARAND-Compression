@@ -20,8 +20,6 @@ def CompressMT(a1, a2, a3, Threads, ANS, CUR, x):
         strr = [0]
         strrec = [0]
         while strr != a2:
-            if (ANS[1] != ""):
-                exit()
             w += Threads
             if int(nrandint(w, 0, 256, 1)[0]) == a2[0]:
                 strrec = nrandint(w, 0, 256, a3)
@@ -63,7 +61,7 @@ def Decompress():
         TempData += int(byte).to_bytes(1, "big")
         if len(TempData) % 100 == 0:
             print(f'{len(TempData)+len(Data):,}', "of", f'{len(srtstr):,}' + ".", end = "\r")
-            if len(TempData) % 1000000 == 0:
+            if len(TempData) % 200000 == 0:
                 Data += TempData
                 TempData = b''
     if len(TempData) != 0:
@@ -103,7 +101,7 @@ def Compress():
     CUR[1] = 0 + x
     Start = time()
     while (Threadsnm <= Threads):
-        Thread(target=CompressMT, args=(Threadsnm, srtstr, srtstrlen, Threads, ANS, CUR, x)).start()
+        Thread(target=CompressMT, args=(Threadsnm, srtstr, srtstrlen, Threads, ANS, CUR, x), daemon=True).start()
         print("Thread " + str(Threadsnm) + " started.")
         Threadsnm += 1
     while (ANS[1] == ""):
