@@ -65,7 +65,7 @@ def Decompress():
         TempData += int(byte).to_bytes(7, "big")
         if len(TempData) % 100 == 0:
             print(f'{len(TempData)+len(Data):,}', "of", f'{len(srtstr):,}' + ".", end = "\r")
-            if len(TempData) % 200000 == 0:
+            if len(TempData) >= 200000 == 0:
                 Data += TempData
                 TempData = b''
     if len(TempData) != 0:
