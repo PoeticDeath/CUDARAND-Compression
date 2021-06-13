@@ -21,12 +21,16 @@ def CompressMT(a1, a2, a3, Threads, ANS, CUR, x):
         strrec = [0]
         while strr != a2:
             w += Threads
-            if int(nrandint(w, 0, 256, 1)[0]) == a2[0]:
-                strrec = nrandint(w, 0, 256, a3)
-                strrec = strrec.tolist()
+            if int(nrandint(w, 256**6, 256**7, 1)[0]).to_bytes(7, "big")[:len(a2[0])] == a2[0]:
+                strrec = nrandint(w, 256**6, 256**7, int(a3))
+                strrec.tolist()
+                strrec = [int(strrec[i]).to_bytes(7, "big") for i in range(0, len(strrec))]
+                if len(a2[-1]) % 7 != 0:
+                    while len(strrec[-1]) % 7 != len(a2[-1]) % 7:
+                        strrec[-1] = strrec[-1][:-1]
             else:
                 strrec = [0]
-            if strrec == a2:
+            if strrec[:a3] == a2[:a3]:
                 strr = strrec
             n += 1
             if n % v == 0:
@@ -53,12 +57,12 @@ def Decompress():
     z = int(str(z), 16)
     srtstrlen = Data[1]
     srtstrlen = int(str(srtstrlen), 16)
-    srtstr = nrandint(int(z), 0, 256, int(srtstrlen))
+    srtstr = nrandint(int(z), 256**6, 256**7, int(srtstrlen//7)+1)
     srtstr = srtstr.tolist()
     Data = b''
     TempData = b''
     for byte in srtstr:
-        TempData += int(byte).to_bytes(1, "big")
+        TempData += int(byte).to_bytes(7, "big")
         if len(TempData) % 100 == 0:
             print(f'{len(TempData)+len(Data):,}', "of", f'{len(srtstr):,}' + ".", end = "\r")
             if len(TempData) % 200000 == 0:
@@ -71,7 +75,7 @@ def Decompress():
     remove(Filename)
     Filename = Filename[:-9]
     OpenFile = open(Filename, "wb")
-    OpenFile.write(Data)
+    OpenFile.write(Data[:srtstrlen])
     OpenFile.close()
 def Compress():
     manager = Manager()
@@ -82,8 +86,9 @@ def Compress():
         Filename = input("What file would you like to compress? : ")
     OpenFile = open(Filename, "rb")
     srtstr = OpenFile.read()
-    srtstr = [srtstr[i] for i in range(0, len(srtstr))]
     srtstrlen = len(srtstr)
+    srtstr = [srtstr[i : i + 7] for i in range(0, len(srtstr), 7)]
+    a3 = len(srtstr)
     Threads = cpu_count(logical=False)
     try:
         x = int(argv[3])
@@ -96,7 +101,7 @@ def Compress():
     CUR[1] = 0 + x
     Start = time()
     while (Threadsnm <= Threads):
-        Thread(target=CompressMT, args=(Threadsnm, srtstr, srtstrlen, Threads, ANS, CUR, x), daemon=True).start()
+        Thread(target=CompressMT, args=(Threadsnm, srtstr, a3, Threads, ANS, CUR, x), daemon=True).start()
         print("Thread " + str(Threadsnm) + " started.")
         Threadsnm += 1
     while (ANS[1] == ""):
