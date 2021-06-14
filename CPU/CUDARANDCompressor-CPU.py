@@ -17,9 +17,8 @@ def CompressMT(a1, a2, a3, Threads, ANS, CUR, x):
         n = 0
         v = 50000
         w = a1 - 1 + x
-        strr = [0]
         strrec = [0]
-        while strr != a2:
+        while strrec != a2:
             w += Threads
             if int(nrandint(w, 0, 72057594037927936, 1)[0]).to_bytes(7, "big")[:len(a2[0])] == a2[0]:
                 strrec = nrandint(w, 0, 72057594037927936, int(a3))
@@ -30,8 +29,6 @@ def CompressMT(a1, a2, a3, Threads, ANS, CUR, x):
                         strrec[-1] = strrec[-1][:-1]
             else:
                 strrec = [0]
-            if strrec[:a3] == a2[:a3]:
-                strr = strrec
             n += 1
             if n % v == 0:
                 n = 0
