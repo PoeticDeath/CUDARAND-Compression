@@ -16,13 +16,12 @@ def CompressMT(a1, a2, a3, Threads, ANS, CUR, x):
     try:
         n = 0
         v = 50000
-        w = a1 - 1 + x
+        w = a1 - 1 - Threads + x
         strrec = [0]
         while strrec != a2:
             w += Threads
             if int(nrandint(w, 0, 72057594037927936, 1)[0]).to_bytes(7, "big")[:len(a2[0])] == a2[0]:
                 strrec = nrandint(w, 0, 72057594037927936, int(a3))
-                strrec.tolist()
                 strrec = [int(strrec[i]).to_bytes(7, "big") for i in range(0, len(strrec))]
                 if len(a2[-1]) % 7 != 0:
                     while len(strrec[-1]) % 7 != len(a2[-1]) % 7:
