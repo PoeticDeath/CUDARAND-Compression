@@ -15,7 +15,7 @@ def nrandint(w, x, y, z):
 def CompressMT(a1, a2, a3, Threads, ANS, CUR, x):
     try:
         n = 0
-        v = 400
+        v = 50000
         w = a1 - 1 + x
         strr = [0]
         strrec = [0]
