@@ -14,21 +14,17 @@ def nrandint(w, x, y, z):
     return v[:z]
 def CompressMT(a1, a2, a3, Threads, ANS, CUR, x):
     try:
-        n = 0
         v = 50000
         w = a1 - 1 - Threads + x
         strrec = [0]
         while strrec != a2:
             w += Threads
             if int(nrandint(w, 0, 72057594037927936, 1)[0]).to_bytes(7, "big")[:len(a2[0])] == a2[0]:
-                strrec = nrandint(w, 0, 72057594037927936, int(a3))
-                strrec = [int(strrec[i]).to_bytes(7, "big") for i in range(0, len(strrec))]
+                strrec = [int(nrandint(w, 0, 72057594037927936, int(a3))[i]).to_bytes(7, 'big') for i in range(int(a3))]
                 strrec[-1] = strrec[-1][:len(a2[-1])]
             else:
                 strrec = [0]
-            n += 1
-            if n % v == 0:
-                n = 0
+            if w % v == 0:
                 CUR[1] += v
         ANS[1] = int(w)
     except:
