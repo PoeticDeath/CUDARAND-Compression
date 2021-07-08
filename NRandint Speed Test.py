@@ -1,8 +1,6 @@
 # NRandint Speed Test
 
 from numpy.random import seed, randint
-from torch import manual_seed
-from torch import randint as rand
 from numba import njit
 from time import time
 @njit
@@ -11,29 +9,21 @@ def nrandint(w, x, y, z):
     v = randint(x, y, z)
     return v[:z]
 s = 0
-c = 10
+c = 1000000
 a = 0
-b = 10
-manual_seed(s)
-rand(a, (b-1), (1, c))
-tstart = time()
-manual_seed(s)
-torchrun = rand(a, (b-1), (1, c))
-tend = time() - tstart
-print("torch finished.")
+b = 2**(8*7)
 seed(s)
-randint(a, b, c)
+randint(a, b, c, dtype='uint64')
 nstart = time()
-seed(s)
-numpyrun = randint(a, b, c)
+seed(s+1)
+numpyrun = randint(a, b, c, dtype='uint64')
 nend = time() - nstart
 print("numpy finished.")
 nrandint(s, a, b, c)
 jstart = time()
-njitrun = nrandint(s, a, b, c)
+njitrun = nrandint(s+1, a, b, c)
 jend = time() - jstart
 print("njit finished.")
-print(str("%.16f" % tend) + " seconds for a torch run.")
 print(str("%.16f" % nend) + " seconds for a numpy run.")
 print(str("%.16f" % jend) + " seconds for a njit  run.")
 
@@ -57,3 +47,7 @@ print(str("%.16f" % float(en - st)), "seconds for measuring time.")
 
 from psutil import cpu_freq
 print(str("%.16f" % float(1 / (max(cpu_freq())*1000000))), "seconds per clock.")
+
+# Bytes Gen Per Sec
+
+print(f'{float(1/jend*c/1_000_000_000):,}', 'GBytes per Second per Core.')
