@@ -1,7 +1,6 @@
 from numpy.random import seed, randint
 from numba import njit
-from sys import argv
-from sys import exit
+from sys import argv, exit
 from multiprocessing import Process as Thread
 from multiprocessing import Manager
 from time import time
@@ -15,15 +14,12 @@ def nrandint(w, x, y, z):
 def CompressMT(a1, a2, a3, Threads, ANS, CUR, x):
     try:
         v = 50000
-        w = a1 - 1 - Threads + x
-        strrec = [0]
-        while strrec != a2:
-            w += Threads
+        for w in range(int(256**7/Threads*(a1-1)), int(256**7/Threads*a1)):
             if int(nrandint(w, 0, 72057594037927936, 1)[0]).to_bytes(7, "big")[:len(a2[0])] == a2[0]:
                 strrec = [int(nrandint(w, 0, 72057594037927936, int(a3))[i]).to_bytes(7, 'big') for i in range(int(a3))]
                 strrec[-1] = strrec[-1][:len(a2[-1])]
-            else:
-                strrec = [0]
+                if strrec == a2:
+                    break
             if w % v == 0:
                 CUR[1] += v
         ANS[1] = int(w)
@@ -96,7 +92,10 @@ def Compress():
         Threadsnm += 1
     while (ANS[1] == ""):
         CURTIME = time() - Start
-        print(f'{CUR[1]:,}' + ' Checked, ' + f'{int(int(CUR[1]-x)//CURTIME):,}' + ' Checked per Second.', end="\r")
+        print(str(CUR[1]/256**7*100) + '% Complete,', f'{CUR[1]:,}' + ' Checked, ' + f'{int(int(CUR[1]-x)//CURTIME):,}' + ' Checked per Second.', end="\r")
+        if CUR[1] == 256**7:
+            print('File not compressible.')
+            exit()
         pass
     print()
     z = int(ANS[1])
